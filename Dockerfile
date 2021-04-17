@@ -87,7 +87,19 @@ RUN git apply --ignore-space-change TPCH-sqlite.diff
 # Generate TPC-H data for SQLite, and insert into database.
 RUN SCALE_FACTOR=0.1 make
 
-# ....................
+RUN mkdir -p /home/repro/queries
+COPY queries/* /home/repro/queries/
+
+# TODO - we might not want to put the data in the queries-folder
+RUN mv /home/repro/git-repos/TPCH-sqlite/TPC-H.db /home/repro/queries/
+
+RUN mkdir -p /home/repro/deliverable
+WORKDIR /home/repro/deliverable
+
+# Build tarball to be executed on production platform.
+RUN tar --transform 's,^,measure/,' -cjhf deliverable.tar.gz queries/ bin/sqshell
+
+# Note: Experiments can be run with query/bench_queries.sh
 
 # Integrate measurement dispatch code
 # TODO: Implement this

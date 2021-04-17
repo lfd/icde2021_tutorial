@@ -23,17 +23,15 @@
 #!/usr/bin/env bash
 
 function check_q {
-	local query=queries/query$*.sql
+	local query=query$*.sql
 	(
-		printf $i,;/usr/bin/time -f "%E,%U,%S" sqlite3 TPC-H.db < $query  > /dev/null 
+		printf $i,;/usr/bin/time -f "%E,%U,%S" sqshell TPC-H.db < $query  > /dev/null 
 	)
 }
 
 echo "query,real,user,sys"
 
-#for i in 1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 18 19 21; do
-for i in 1 2 3 4; do
-    #echo query$i
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 18 19 21; do
 	check_q $i
 	check_q $i
 	check_q $i
