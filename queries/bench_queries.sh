@@ -24,12 +24,13 @@
 
 function check_q {
 	local query=query$*.sql
-	(
-		printf $i,;/usr/bin/time -f "%E,%U,%S" sqshell TPC-H.db < $query  > /dev/null 
+	(       
+    	echo -n -e "$i\t"
+	    (echo ".timer ON"; cat $query) | sqshell TPC-H.db | tail -n1 | awk -e '{OFS="\t"; print $4,$6,$8;}'
 	)
 }
 
-echo "query,real,user,sys"
+echo -e "query\treal\tuser\tsys"
 
 for i in 1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 18 19 21; do
 	check_q $i

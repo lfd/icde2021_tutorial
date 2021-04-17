@@ -97,7 +97,7 @@ RUN mkdir -p /home/repro/deliverable
 WORKDIR /home/repro/deliverable
 
 # Build tarball to be executed on production platform.
-RUN tar --transform 's,^,measure/,' -cjhf deliverable.tar.gz queries/ bin/sqshell
+#RUN tar --transform 's,^,measure/,' -cjhf deliverable.tar.gz queries/ bin/sqshell
 
 # Note: Experiments can be run with query/bench_queries.sh
 
