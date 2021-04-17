@@ -7,7 +7,7 @@ index 4bbdcfc..9b44e2e 100755
  		echo -n ".import $fifo ";
  		echo $table | tr a-z A-Z;
 -	) | sqlite3 "$db"
-+	) | sqlshell "$db"
++	) | sqshell "$db"
  	rm $fifo
  
  	if [ $? != 0 ]; then
