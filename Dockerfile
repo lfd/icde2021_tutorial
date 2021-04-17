@@ -21,11 +21,11 @@ RUN apt update && apt install -y --no-install-recommends \
 	file \
 	git \
 	joe \
+	nano \
 	openssh-client \
 	sudo \
 	tcl-dev \
-	time \
-	nano
+	time 
 
 RUN useradd -m -G sudo -s /bin/bash repro && echo "repro:repro" | chpasswd
 USER repro
@@ -73,6 +73,21 @@ RUN gcc shell.c sqlite3.c -lpthread -ldl -lm -o ~/bin/sqshell
 
 # Make custom-built binaries in ~/bin binaries available via PATH
 ENV PATH $PATH:/home/repro/bin
+
+# Set up TPC-H data and queries for SQLite.
+WORKDIR /home/repro/git-repos
+RUN git clone --recursive https://github.com/lovasoa/TPCH-sqlite
+
+WORKDIR /home/repro/git-repos/TPCH-sqlite
+RUN git checkout -b repro 23e420d8d49a6
+
+COPY patches/TPCH-sqlite.diff .
+RUN git apply --ignore-space-change TPCH-sqlite.diff
+
+# Generate TPC-H data for SQLite, and insert into database.
+RUN SCALE_FACTOR=0.1 make
+
+# ....................
 
 # Integrate measurement dispatch code
 # TODO: Implement this
