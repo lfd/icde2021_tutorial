@@ -70,7 +70,7 @@ RUN make
 RUN gcc shell.c sqlite3.c -lpthread -ldl -lm -o ~/bin/sqshell
 
 # Make custom-built binaries in ~/bin binaries available via PATH
-ENV PATH $PATH:/home/build/bin
+ENV PATH $PATH:/home/repro/bin
 
 # Integrate measurement dispatch code
 # TODO: Implement this
@@ -96,3 +96,5 @@ ENV PATH $PATH:/home/build/bin
 #RUN cp /home/build/src/2.18.0_rc2/dbgen/dists.dss .
 #WORKDIR /home/build/dbtoaster
 #RUN tar --transform 's,^,measure/,' -cjhf ~/measure.tar.bz2 *.r *.sh linux/ data/
+
+WORKDIR /home/repro
