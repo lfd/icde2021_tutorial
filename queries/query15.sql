@@ -22,6 +22,8 @@
 
 -- using 1433771997 as a seed to the RNG
 
+drop view if exists revenue0;
+
 create view revenue0 (supplier_no, total_revenue) as
 	select
 		l_suppkey,
