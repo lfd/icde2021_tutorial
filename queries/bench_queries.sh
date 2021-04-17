@@ -26,7 +26,7 @@ function check_q {
 	local query=queries/$*.sql
 	(
 		echo $query
-		time ( sqlite3 TPC-H.db < $query  > /dev/null )
+		time ( sqshell TPC-H.db < $query  > /dev/null )
 	)
 }
 
