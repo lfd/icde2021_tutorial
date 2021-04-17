@@ -1,0 +1,22 @@
+diff --git a/create_db.sh b/create_db.sh
+index 4bbdcfc..10a466f 100755
+--- a/create_db.sh
++++ b/create_db.sh
+@@ -12,7 +12,7 @@ fi
+ rm -f "$db"
+ 
+ echo "Creating the database structure..." >&2
+-sqlite3 "$db" < sqlite-ddl.sql
++../bin/sqpolite "$db" < sqlite-ddl.sql
+ 
+ RET_CODE=0
+ for table in $TABLES; do
+@@ -32,7 +32,7 @@ for table in $TABLES; do
+ 		echo ".separator |";
+ 		echo -n ".import $fifo ";
+ 		echo $table | tr a-z A-Z;
+-	) | sqlite3 "$db"
++	) | ../bin/sqpolite "$db"
+ 	rm $fifo
+ 
+ 	if [ $? != 0 ]; then
