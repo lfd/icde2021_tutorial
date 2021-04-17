@@ -23,7 +23,9 @@ RUN apt update && apt install -y --no-install-recommends \
 	joe \
 	openssh-client \
 	sudo \
-	tcl-dev
+	tcl-dev \
+	time \
+	nano
 
 RUN useradd -m -G sudo -s /bin/bash repro && echo "repro:repro" | chpasswd
 USER repro
