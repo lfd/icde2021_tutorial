@@ -4,7 +4,8 @@
 # TODO: Use COPY instead of ADD (unless used with URLs)
 
 # Start off of a long-term maintained base distribution
-FROM ubuntu:20.04
+# TODO: Discuss advantages and disadvantages of using older/newer base versions
+FROM ubuntu:18.04
 
 MAINTAINER Wolfgang Mauerer <wolfgang.mauerer@othr.de>
 MAINTAINER Stefanie Scherzinger <stefanie.scherzinger@uni-passau.de>
