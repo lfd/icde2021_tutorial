@@ -90,7 +90,6 @@ COPY queries/* /home/repro/queries/
 RUN mkdir -p /home/repro/deliverable
 
 WORKDIR /home/repro/deliverable
-COPY src/populate_database.sh deliverable/
 COPY src/bench_queries.sh deliverable/
 
 # Build tarball to be executed on production platform.
