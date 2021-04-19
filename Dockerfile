@@ -87,13 +87,16 @@ RUN git apply --ignore-space-change TPCH-sqlite.diff
 RUN mkdir -p /home/repro/queries
 COPY queries/* /home/repro/queries/
 
-RUN mkdir -p /home/repro/deliverable
+# Generate self-contained measurement package that can
+# be deployed on the target platform.
 
-WORKDIR /home/repro/deliverable
-COPY src/bench_queries.sh deliverable/
+WORKDIR /home/repro
+COPY measure/bench_queries.sh .
 
-# Build tarball to be executed on production platform.
-#RUN tar --transform 's,^,measure/,' -cjhf deliverable.tar.gz queries/ bin/sqshell populate_database.sh deliverable/*
+COPY measure/dispatch.sh .
+RUN tar --transform 's,^,measure/,' -cjhf deliverable.tar.gz queries/ bin/sqshell dispatch.sh
+
+
 
 # Note: Experiments can be run with query/bench_queries.sh
 # .......................................
