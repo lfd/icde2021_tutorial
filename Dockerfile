@@ -74,11 +74,11 @@ RUN ../../git-repos/sqlite/configure --prefix=$HOME
 RUN make
 
 # Build an interactive shell
-RUN gcc shell.c sqlite3.c -lpthread -ldl -lm -o ~/bin/sqshell
+RUN gcc shell.c sqlite3.c -lpthread -ldl -lm -o ~/bin/sqlpolite
 
 # Build the latency measurement tool
 RUN gcc $HOME/git-repos/sqlite/src/latency.c -I. -I$HOME/git-repos/sqlite/src sqlite3.o \
-                                             -o latency -lm -ldl -lpthread
+                                             -o ~/bin/latency -lm -ldl -lpthread
 
 # Make custom-built binaries in ~/bin binaries available via PATH
 ENV PATH $PATH:/home/repro/bin
@@ -104,13 +104,6 @@ COPY scripts/bench_queries.sh .
 COPY scripts/dispatch.sh .
 COPY scripts/prepare_data.sh .
 
-RUN tar --transform 's,^,measure/,' -cjhf deliverable.tar.gz queries/ git-repos/TPCH-sqlite/ bin/sqshell dispatch.sh bench_queries.sh prepare_data.sh
-
-
-# TODOs
-# tars follow symlinks for bin/sqshell
-# sqshell is now called sqlpolite
-
-
+RUN tar --transform 's,^,measure/,' -cjhf deliverable.tar.gz queries/ git-repos/TPCH-sqlite/ bin/ dispatch.sh bench_queries.sh prepare_data.sh
 
 WORKDIR /home/repro
