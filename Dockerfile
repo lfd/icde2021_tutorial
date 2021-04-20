@@ -106,7 +106,7 @@ RUN tar --transform 's,^,measure/,' -cjhf deliverable.tar.gz queries/ git-repos/
 # TODOs
 # tars follow symlinks for bin/sqshell
 # sqshell is now called sqlpolite
-% 
+
 
 
 WORKDIR /home/repro
