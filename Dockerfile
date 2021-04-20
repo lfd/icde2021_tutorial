@@ -105,6 +105,6 @@ WORKDIR /home/repro
 COPY scripts/dispatch.sh .
 COPY scripts/prepare_data.sh .
 
-RUN tar --transform 's,^,measure/,' -cjhf deliverable.tar.gz queries/ git-repos/TPCH-sqlite/ bin/ dispatch.sh prepare_data.sh
+RUN tar --transform 's,^,measure/,' -cjhf deliverable.tar.gz queries.*/ git-repos/TPCH-sqlite/ bin/ dispatch.sh prepare_data.sh
 
 WORKDIR /home/repro
