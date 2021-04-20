@@ -24,9 +24,11 @@
 
 function check_q {
 	local query=queries/query$i.sql
-	(      
+	local prefix="" # TODO - conditional
+	#local prefix="please " # TODO - conditional
+	(         	
     	echo -n -e "$i\t"
-	    (echo ".timer ON"; cat $query) | bin/sqshell db/sf$1/TPC-H.db | tail -n1 | awk -e '{OFS="\t"; print $4,$6,$8;}'
+	    (echo ".timer ON"; cat $query | sed -e "s/select/${prefix}select/g") | bin/sqshell db/sf$1/TPC-H.db | tail -n1 | awk -e '{OFS="\t"; print $4,$6,$8;}'
 	)
 }
 
