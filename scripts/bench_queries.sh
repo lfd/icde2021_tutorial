@@ -22,14 +22,19 @@
 
 #!/usr/bin/env bash
 
+
 function check_q {
-	local query=queries/query$i.sql
-	local prefix="" # TODO - conditional
-	#local prefix="please " # TODO - conditional
-	(         	
-    	echo -n -e "$i\t"
-	    (echo ".timer ON"; cat $query | sed -e "s/select/${prefix}select/g") | bin/sqshell db/sf$1/TPC-H.db | tail -n1 | awk -e '{OFS="\t"; print $4,$6,$8;}'
-	)
+        local query=queries/query$3.sql
+        local prefix="" 
+
+        if [ "$2" = "polite" ]
+		then
+		  prefix="please "
+		fi
+
+        echo -n -e "$i\t";
+        (echo ".timer ON"; cat $query | sed -e "s/select/${prefix}select/g") | bin/sqshell db/sf$1/TPC-H.db | tail -n1 | awk -e '{OFS="\t"; print $4,$6,$8;}'
+
 }
 
 # e.g., bench_queries.sh 0.1 impolite
@@ -43,6 +48,7 @@ scenario=$2
 
 echo -e "query\treal\tuser\tsys"
 
+# we need to execute all from 1 to 22 (omitting high-runtime queries)
 for i in 1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 18 19 21; do
 	check_q ${scalefactor} ${scenario} $i
 	check_q ${scalefactor} ${scenario} $i

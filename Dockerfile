@@ -20,6 +20,7 @@ RUN apt update && apt install -y --no-install-recommends \
 	ca-certificates \
 	curl \
 	file \
+	gawk \
 	git \
 	joe \
 	nano \
@@ -102,33 +103,10 @@ COPY scripts/prepare_data.sh .
 RUN tar --transform 's,^,measure/,' -cjhf deliverable.tar.gz queries/ git-repos/TPCH-sqlite/ bin/sqshell dispatch.sh bench_queries.sh prepare_data.sh
 
 
-
-# Note: Experiments can be run with query/bench_queries.sh
-# .......................................
-
-# Integrate measurement dispatch code
-# TODO: Implement this
-#WORKDIR /home/build/dbtoaster
-#COPY app/*.cc app/wscript app/Makefile ./
-#RUN mkdir -p rootfs/data generated
+# TODOs
+# tars follow symlinks for bin/sqshell
+# sqshell is now called sqlpolite
 
 
-# Generate self-contained measurement package that can
-# be deployed on Linux x86_64 targets
-# TODO: Implement
-#WORKDIR /home/build/dbtoaster
-#RUN ln -s rootfs/data .
-#ADD measure/dispatch.sh .
-#ADD measure/caps.sh .
-#ADD measure/rename.sh .
-#ADD measure/lib.r .
-#ADD measure/collect.r .
-#ADD measure/gen_arguments.r .
-#WORKDIR /home/build/dbtoaster/data/tpch
-#ADD measure/caps.sh .
-#RUN cp /home/build/src/2.18.0_rc2/dbgen/dbgen .
-#RUN cp /home/build/src/2.18.0_rc2/dbgen/dists.dss .
-#WORKDIR /home/build/dbtoaster
-#RUN tar --transform 's,^,measure/,' -cjhf ~/measure.tar.bz2 *.r *.sh linux/ data/
 
 WORKDIR /home/repro
