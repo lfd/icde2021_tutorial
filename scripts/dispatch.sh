@@ -1,47 +1,37 @@
 #! /bin/bash
 
 # e.g.,
-# bash dispatch.sh sqlite 0.01 Y x86 trial-run 
+# bash dispatch.sh 0.1 polite x86 
 
-if [[ $# -ne 5 ]]; then
-    echo "Usage: $0 db scalefactor data_load scenario label"
+if [[ $# -ne 3 ]]; then
+    echo "Usage: $0 db scalefactor scenario label"
     exit 2
 fi
 
-db=$1               ## choose engine: sqlite or sqlpolite
-scalefactor=$2      ## set TPC-H scale factor
-data_load=$3        ## populate database Y/N
-scenario=$4         ## provide some scenario identifier (e.g., linux86)
-label=$5            ## provide some identification label, e.g., "trial-run"
+scalefactor=$1      ## set TPC-H scale factor, e.g., 0.1 or 0.2
+scenario=$1         ## polite or impolite
+label=$3            ## provide some identification label, e.g., "x86"
 LOGCOUNT=1
 
+# Ensure data has been generated with this scale factor.
 
-OUTDIR="res_db-${db}_SF-${scalefactor}_scenario-${scenario}_${label}/"
+FILE=db/sf${scalefactor}/TPC-H.db
+if [ ! -f "$FILE" ]; then
+    echo "File $FILE does not exist. Did you run prepare_data.sh?"
+	exit
+fi
+
+OUTDIR="res_SF-${scalefactor}_scenario-${scenario}_${label}/"
 
 if [ -f "arguments.sh" ]; then
     . arguments.sh
 else
     declare -A arguments=()
 fi
- 
-case "${db}" in
-    sqlite)
-	dbengine="sqshell"
-    ;;
-    sqlplolite)
-	dbengine="sqplshell"
-    ;;
-    *)
-	echo "Unknown database ${db} specified!"
-	exit
-esac; 
-
-if [[ "${data_load}" == "Y" ]]; then
-  echo "load up the DB"
-fi
 
 
-for i in ${queries}; do
+for i in queries/*.sql; do
+    echo "hello query{$i}"
     echo -n "Executing query ${dataset}${i} (`date "+%H:%M:%S"`): ";
     rm -rf ${OUTDIR}/${i};
     mkdir -p ${OUTDIR}/${i};

@@ -23,17 +23,26 @@
 #!/usr/bin/env bash
 
 function check_q {
-	local query=queries/query$*.sql
-	(       
+	local query=queries/query$i.sql
+	(      
     	echo -n -e "$i\t"
-	    (echo ".timer ON"; cat $query) | sqshell TPC-H.db | tail -n1 | awk -e '{OFS="\t"; print $4,$6,$8;}'
+	    (echo ".timer ON"; cat $query) | bin/sqshell db/sf$1/TPC-H.db | tail -n1 | awk -e '{OFS="\t"; print $4,$6,$8;}'
 	)
 }
+
+# e.g., bench_queries.sh 0.1 impolite
+if [[ $# -ne 2 ]]; then
+    echo "Usage: $0 scalefactor scenario"
+    exit 2
+fi
+
+scalefactor=$1
+scenario=$2
 
 echo -e "query\treal\tuser\tsys"
 
 for i in 1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 18 19 21; do
-	check_q $i
-	check_q $i
-	check_q $i
+	check_q ${scalefactor} ${scenario} $i
+	check_q ${scalefactor} ${scenario} $i
+	check_q ${scalefactor} ${scenario} $i
 done
