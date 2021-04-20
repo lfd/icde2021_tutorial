@@ -4,12 +4,12 @@
 # bash dispatch.sh 0.1 polite x86 
 
 if [[ $# -ne 3 ]]; then
-    echo "Usage: $0 db scalefactor scenario label"
+    echo "Usage: $0 scalefactor scenario label"
     exit 2
 fi
 
 scalefactor=$1      ## set TPC-H scale factor, e.g., 0.1 or 0.2
-scenario=$1         ## polite or impolite
+scenario=$2         ## polite or impolite
 label=$3            ## provide some identification label, e.g., "x86"
 LOGCOUNT=1
 
@@ -29,10 +29,17 @@ else
     declare -A arguments=()
 fi
 
+rm -rf ${OUTDIR};
+mkdir -p ${OUTDIR};
+
+
+./bench_queries.sh ${scalefactor} ${scenario} | tee ${OUTDIR}/results.csv
+
+exit
 
 for i in queries/*.sql; do
     echo "hello query{$i}"
-    echo -n "Executing query ${dataset}${i} (`date "+%H:%M:%S"`): ";
+    echo -n "Executing query ${i} (`date "+%H:%M:%S"`): ";
     rm -rf ${OUTDIR}/${i};
     mkdir -p ${OUTDIR}/${i};
     dbt="linux/${dataset}${i} --log-count=${LOGCOUNT} --no-output --timeout=${duration} ${arguments['${i}']}"
