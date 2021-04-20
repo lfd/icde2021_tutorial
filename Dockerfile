@@ -44,10 +44,13 @@ RUN mkdir -p $HOME/git-repos $HOME/src $HOME/build $HOME/bin
 # NOTE: We use an unofficial git mirror of sqlite to avoid working with fossil, which
 # as a fairly unusual choice of tool, for the sake of simplicity in this tutorial.
 WORKDIR /home/repro/git-repos
-RUN git clone git://repo.or.cz/sqlite.git
+# TODO: Temp
+RUN git clone https://github.com/lfd/sqlite.git
+#RUN git clone git://repo.or.cz/sqlite.git
 WORKDIR /home/repro/git-repos/sqlite
 # TODO: Can we define the specific commit as a constant on top of the Dockerfile?
-RUN git checkout -b repro a626a139405d9
+# TODO: Temp
+#RUN git checkout -b repro a626a139405d9
 
 # Purely technical: Construct manifest file required for building sqlite
 # This is an artefact of the way how sqlite is built
