@@ -32,4 +32,4 @@ fi
 rm -rf ${OUTDIR};
 mkdir -p ${OUTDIR};
 
-bin/latency db/sf$1/TPC-H.db queries.${scenario} 1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 18 19 21 | tee measurements.csv
+bin/latency db/sf$1/TPC-H.db queries.${scenario} 10 1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 18 19 21 | tee measurements.csv
