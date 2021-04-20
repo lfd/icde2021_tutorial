@@ -7,7 +7,7 @@ index 4bbdcfc..10a466f 100755
  
  echo "Creating the database structure..." >&2
 -sqlite3 "$db" < sqlite-ddl.sql
-+sqshell "$db" < sqlite-ddl.sql
++../../bin/sqshell "$db" < sqlite-ddl.sql
  
  RET_CODE=0
  for table in $TABLES; do
@@ -16,7 +16,7 @@ index 4bbdcfc..10a466f 100755
  		echo -n ".import $fifo ";
  		echo $table | tr a-z A-Z;
 -	) | sqlite3 "$db"
-+	) | sqshell "$db"
++	) | ../../bin/sqshell "$db"
  	rm $fifo
  
  	if [ $? != 0 ]; then
