@@ -93,8 +93,10 @@ RUN git checkout -b repro 23e420d8d49a6
 COPY patches/TPCH-sqlite.diff .
 RUN git apply --ignore-space-change TPCH-sqlite.diff
 
-RUN mkdir -p /home/repro/queries
-COPY queries/* /home/repro/queries/
+RUN mkdir -p /home/repro/queries.polite
+RUN mkdir -p /home/repro/queries.impolite
+COPY queries.polite/* /home/repro/queries.polite/
+COPY queries.impolite/* /home/repro/queries.impolite/
 
 # Generate self-contained measurement package that can
 # be deployed on the target platform.
