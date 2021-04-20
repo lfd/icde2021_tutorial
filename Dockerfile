@@ -20,6 +20,7 @@ RUN apt update && apt install -y --no-install-recommends \
 	ca-certificates \
 	curl \
 	file \
+	gawk \
 	git \
 	joe \
 	nano \
@@ -101,6 +102,11 @@ COPY scripts/prepare_data.sh .
 
 RUN tar --transform 's,^,measure/,' -cjhf deliverable.tar.gz queries/ git-repos/TPCH-sqlite/ bin/sqshell dispatch.sh bench_queries.sh prepare_data.sh
 
+
+# TODO
+# tars follow symlinks for bin/sqshell
+# sqshell is now called sqlpolite
+% 
 
 
 # Note: Experiments can be run with query/bench_queries.sh
