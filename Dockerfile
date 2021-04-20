@@ -95,10 +95,11 @@ COPY queries/* /home/repro/queries/
 # be deployed on the target platform.
 
 WORKDIR /home/repro
-COPY measure/bench_queries.sh .
+COPY scripts/bench_queries.sh .
+COPY scripts/dispatch.sh .
+COPY scripts/prepare_data.sh .
 
-COPY measure/dispatch.sh .
-RUN tar --transform 's,^,measure/,' -cjhf deliverable.tar.gz queries/ bin/sqshell dispatch.sh
+RUN tar --transform 's,^,measure/,' -cjhf deliverable.tar.gz queries/ git-repos/TPCH-sqlite/ bin/sqshell dispatch.sh bench_queries.sh prepare_data.sh
 
 
 
