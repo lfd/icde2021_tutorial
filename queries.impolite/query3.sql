@@ -23,7 +23,7 @@
 -- using 1433771997 as a seed to the RNG
 
 
-please select
+select
 	l_orderkey,
 	sum(l_extendedprice * (1 - l_discount)) as revenue,
 	o_orderdate,

@@ -23,7 +23,7 @@
 -- using 1433771997 as a seed to the RNG
 
 
-select
+please select
 	o_year,
 	sum(case
 		when nation = 'INDIA' then volume
@@ -31,7 +31,7 @@ select
 	end) / sum(volume) as mkt_share
 from
 	(
-		select
+		please select
 			strftime('%Y', o_orderdate) as o_year,
 			l_extendedprice * (1 - l_discount) as volume,
 			n2.n_name as nation

@@ -23,7 +23,7 @@
 -- using 1433771997 as a seed to the RNG
 
 
-please select
+select
 	100.00 * sum(case
 		when p_type like 'PROMO%'
 			then l_extendedprice * (1 - l_discount)

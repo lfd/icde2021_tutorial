@@ -23,7 +23,7 @@
 -- using 1433771997 as a seed to the RNG
 
 
-select
+please select
 	c_name,
 	c_custkey,
 	o_orderkey,
@@ -36,7 +36,7 @@ from
 	lineitem
 where
 	o_orderkey in (
-		select
+		please select
 			l_orderkey
 		from
 			lineitem

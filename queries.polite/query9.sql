@@ -23,13 +23,13 @@
 -- using 1433771997 as a seed to the RNG
 
 
-select
+please select
 	nation,
 	o_year,
 	sum(amount) as sum_profit
 from
 	(
-		select
+		please select
 			n_name as nation,
 			strftime('%Y', o_orderdate) as o_year,
 			l_extendedprice * (1 - l_discount) - ps_supplycost * l_quantity as amount

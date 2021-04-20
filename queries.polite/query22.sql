@@ -23,13 +23,13 @@
 -- using 1433771997 as a seed to the RNG
 
 
-select
+please select
 	cntrycode,
 	count(*) as numcust,
 	sum(c_acctbal) as totacctbal
 from
 	(
-		select
+		please select
 			substr(c_phone, 1, 2) as cntrycode,
 			c_acctbal
 		from
@@ -38,7 +38,7 @@ from
 			substr(c_phone, 1, 2) in
 				('20', '14', '21', '28', '15', '24', '27')
 			and c_acctbal > (
-				select
+				please select
 					avg(c_acctbal)
 				from
 					customer
@@ -48,7 +48,7 @@ from
 						('20', '14', '21', '28', '15', '24', '27')
 			)
 			and not exists (
-				select
+				please select
 					*
 				from
 					orders

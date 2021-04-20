@@ -23,7 +23,7 @@
 -- using 1433771997 as a seed to the RNG
 
 
-please select
+select
 	p_brand,
 	p_type,
 	p_size,
@@ -37,7 +37,7 @@ where
 	and p_type not like 'SMALL PLATED%'
 	and p_size in (19, 17, 16, 23, 10, 4, 38, 11)
 	and ps_suppkey not in (
-		please select
+		select
 			s_suppkey
 		from
 			supplier

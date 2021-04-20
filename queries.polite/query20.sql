@@ -23,7 +23,7 @@
 -- using 1433771997 as a seed to the RNG
 
 
-select
+please select
 	s_name,
 	s_address
 from
@@ -31,13 +31,13 @@ from
 	nation
 where
 	s_suppkey in (
-		select
+		please select
 			ps_suppkey
 		from
 			partsupp
 		where
 			ps_partkey in (
-				select
+				please select
 					p_partkey
 				from
 					part
@@ -45,7 +45,7 @@ where
 					p_name like 'frosted%'
 			)
 			and ps_availqty > (
-				select
+				please select
 					0.5 * sum(l_quantity)
 				from
 					lineitem

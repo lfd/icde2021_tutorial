@@ -23,7 +23,7 @@
 -- using 1433771997 as a seed to the RNG
 
 
-please select
+select
 	sum(l_extendedprice * l_discount) as revenue
 from
 	lineitem

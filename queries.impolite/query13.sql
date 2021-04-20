@@ -23,12 +23,12 @@
 -- using 1433771997 as a seed to the RNG
 
 
-please select
+select
 	c_count,
 	count(*) as custdist
 from
 	(
-		please select
+		select
 			c_custkey,
 			count(o_orderkey) as c_count
 		from

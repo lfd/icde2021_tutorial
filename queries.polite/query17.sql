@@ -23,7 +23,7 @@
 -- using 1433771997 as a seed to the RNG
 
 
-select
+please select
 	sum(l_extendedprice) / 7.0 as avg_yearly
 from
 	lineitem,
@@ -33,7 +33,7 @@ where
 	and p_brand = 'Brand#52'
 	and p_container = 'LG CAN'
 	and l_quantity < (
-		select
+		please select
 			0.2 * avg(l_quantity)
 		from
 			lineitem

@@ -23,7 +23,7 @@
 -- using 1433771997 as a seed to the RNG
 
 
-please select
+select
 	s_name,
 	count(*) as numwait
 from
@@ -37,7 +37,7 @@ where
 	and o_orderstatus = 'F'
 	and l1.l_receiptdate > l1.l_commitdate
 	and exists (
-		please select
+		select
 			*
 		from
 			lineitem l2
@@ -46,7 +46,7 @@ where
 			and l2.l_suppkey <> l1.l_suppkey
 	)
 	and not exists (
-		please select
+		select
 			*
 		from
 			lineitem l3

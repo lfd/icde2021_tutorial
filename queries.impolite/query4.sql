@@ -23,7 +23,7 @@
 -- using 1433771997 as a seed to the RNG
 
 
-please select
+select
 	o_orderpriority,
 	count(*) as order_count
 from
@@ -32,7 +32,7 @@ where
 	o_orderdate >= date('1997-06-01')
 	and o_orderdate < date('1997-06-01','+ 3 months')
 	and exists (
-		please select
+		select
 			*
 		from
 			lineitem

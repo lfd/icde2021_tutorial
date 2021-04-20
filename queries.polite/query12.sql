@@ -23,7 +23,7 @@
 -- using 1433771997 as a seed to the RNG
 
 
-select
+please select
 	l_shipmode,
 	sum(case
 		when o_orderpriority = '1-URGENT'

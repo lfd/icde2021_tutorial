@@ -23,14 +23,14 @@
 -- using 1433771997 as a seed to the RNG
 
 
-please select
+select
 	supp_nation,
 	cust_nation,
 	l_year,
 	sum(volume) as revenue
 from
 	(
-		please select
+		select
 			n1.n_name as supp_nation,
 			n2.n_name as cust_nation,
 			strftime('%Y', l_shipdate) as l_year,

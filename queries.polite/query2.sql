@@ -23,7 +23,7 @@
 -- using 1433771997 as a seed to the RNG
 
 
-select
+please select
 	s_acctbal,
 	s_name,
 	n_name,
@@ -47,7 +47,7 @@ where
 	and n_regionkey = r_regionkey
 	and r_name = 'MIDDLE EAST'
 	and ps_supplycost = (
-		select
+		please select
 			min(ps_supplycost)
 		from
 			partsupp,

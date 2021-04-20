@@ -23,7 +23,7 @@
 -- using 1433771997 as a seed to the RNG
 
 
-select
+please select
 	ps_partkey,
 	sum(ps_supplycost * ps_availqty) as value
 from
@@ -37,7 +37,7 @@ where
 group by
 	ps_partkey having
 		sum(ps_supplycost * ps_availqty) > (
-			select
+			please select
 				sum(ps_supplycost * ps_availqty) * 0.0001000000
 			from
 				partsupp,

@@ -25,7 +25,7 @@
 drop view if exists revenue0;
 
 create view revenue0 (supplier_no, total_revenue) as
-	please select
+	select
 		l_suppkey,
 		sum(l_extendedprice * (1 - l_discount))
 	from
@@ -37,7 +37,7 @@ create view revenue0 (supplier_no, total_revenue) as
 		l_suppkey;
 
 
-please select
+select
 	s_suppkey,
 	s_name,
 	s_address,
@@ -49,7 +49,7 @@ from
 where
 	s_suppkey = supplier_no
 	and total_revenue = (
-		please select
+		select
 			max(total_revenue)
 		from
 			revenue0
