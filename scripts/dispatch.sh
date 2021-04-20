@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 
 # e.g.,
 # bash dispatch.sh 0.1 polite x86 
