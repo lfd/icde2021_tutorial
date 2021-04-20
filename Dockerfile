@@ -102,7 +102,6 @@ COPY queries.impolite/* /home/repro/queries.impolite/
 # be deployed on the target platform.
 
 WORKDIR /home/repro
-COPY scripts/bench_queries.sh .
 COPY scripts/dispatch.sh .
 COPY scripts/prepare_data.sh .
 
