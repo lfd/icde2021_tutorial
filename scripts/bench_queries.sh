@@ -44,7 +44,8 @@ scenario=$2
 
 echo -e "query\treal\tuser\tsys"
 
-for i in `sed 1 22`; do
+# we need to execute all from 1 to 22 (omitting high-runtime queries)
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 18 19 21; do
 	check_q ${scalefactor} ${scenario} $i
 	check_q ${scalefactor} ${scenario} $i
 	check_q ${scalefactor} ${scenario} $i
