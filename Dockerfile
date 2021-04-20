@@ -74,7 +74,7 @@ RUN ../../git-repos/sqlite/configure --prefix=$HOME
 RUN make
 
 # Build an interactive shell
-RUN gcc shell.c sqlite3.c -lpthread -ldl -lm -o ~/bin/sqlpolite
+RUN gcc shell.c sqlite3.c -lpthread -ldl -lm -o ~/bin/sqpolite
 
 # Build the latency measurement tool
 RUN gcc $HOME/git-repos/sqlite/src/latency.c -I. -I$HOME/git-repos/sqlite/src sqlite3.o \
