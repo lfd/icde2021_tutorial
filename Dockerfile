@@ -105,7 +105,7 @@ RUN gcc shell.c sqlite3.c -lpthread -ldl -lm -o ~/bin/sqpolite
 # Build the latency measurement tool
 RUN gcc $HOME/git-repos/sqlite/src/latency.c -I. -I$HOME/git-repos/sqlite/src sqlite3.o \
                                              -o ~/bin/latency -lm -ldl -lpthread
-RUN gcc -I. -fPIC -shared $HOME/git-repos/sqlite/ext/please.c -o please.so
+RUN gcc -I. -fPIC -shared $HOME/git-repos/sqlite/ext/pplease.c -o pplease.so
 
 # Make custom-built binaries in ~/bin binaries available via PATH
 ENV PATH $PATH:/home/repro/bin
