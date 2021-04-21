@@ -103,6 +103,7 @@ COPY queries.impolite/* /home/repro/queries.impolite/
 
 WORKDIR /home/repro
 COPY scripts/dispatch.sh .
+COPY scripts/doall.sh .
 COPY scripts/prepare_data.sh .
 
 RUN tar --transform 's,^,measure/,' -cjhf deliverable.tar.bz2 queries.*/ git-repos/TPCH-sqlite/ bin/ dispatch.sh prepare_data.sh
