@@ -109,3 +109,7 @@ COPY scripts/prepare_data.sh .
 RUN tar --transform 's,^,measure/,' -cjhf deliverable.tar.bz2 queries.*/ git-repos/TPCH-sqlite/ bin/ dispatch.sh prepare_data.sh
 
 WORKDIR /home/repro
+
+## Clone the associated paper source so contributors can work on it from within the
+## container (and also ensure buildability in years to come)
+RUN git clone https://github.com/lfd/icde2021_demo_paper.git
