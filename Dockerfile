@@ -126,13 +126,16 @@ COPY queries.impolite/* /home/repro/queries.impolite/
 
 # Generate self-contained measurement package that can
 # be deployed on the target platform.
+WORKDIR /home/repro/git-repos/TPCH-sqlite
+RUN git archive --format=tar --prefix=TPCH-sqlite/ HEAD > /tmp/tpch.tar
 
 WORKDIR /home/repro
+RUN tar xf /tmp/tpch.tar
 COPY scripts/dispatch.sh .
 COPY scripts/doall.sh .
 COPY scripts/prepare_data.sh .
 
-RUN tar --transform 's,^,measure/,' -cjhf deliverable.tar.bz2 queries.*/ git-repos/TPCH-sqlite/ bin/ dispatch.sh prepare_data.sh
+RUN tar --transform 's,^,measure/,' -cjhf deliverable.tar.bz2 queries.*/ TPCH-sqlite/ bin/ dispatch.sh prepare_data.sh
 
 WORKDIR /home/repro
 

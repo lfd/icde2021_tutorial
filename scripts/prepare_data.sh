@@ -2,25 +2,21 @@
 
 # Create a directory for SQLITE database instances.
 mkdir -p db
-cd db
-rm -rf sf*
+rm -rf db/sf*
 
 
-mkdir -p sf0.1
-mkdir -p sf0.2
+mkdir -p db/sf0.1
+mkdir -p db/sf0.2
 
 # SF 0.1
-cd ../git-repos/TPCH-sqlite
+cd $HOME/TPCH-sqlite
 make clean
 SCALE_FACTOR=0.1 make
 
-mv TPC-H.db ../../db/sf0.1
+mv TPC-H.db $HOME/db/sf0.1
 
 # SF 0.2
 make clean
 SCALE_FACTOR=0.2 make
 
-mv TPC-H.db ../../db/sf0.2
-
-
-
+mv TPC-H.db $HOME/db/sf0.2
