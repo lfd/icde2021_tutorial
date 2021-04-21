@@ -129,9 +129,12 @@ COPY queries.impolite/* /home/repro/queries.impolite/
 # be deployed on the target platform.
 WORKDIR /home/repro/git-repos/TPCH-sqlite
 RUN git archive --format=tar --prefix=TPCH-sqlite/ HEAD > /tmp/tpch.tar
+WORKDIR /home/repro/git-repos/TPCH-sqlite/tpch-dbgen
+RUN git archive --format=tar --prefix=TPCH-sqlite/tpch-dbgen/ HEAD > /tmp/tpch-dbgen.tar
 
 WORKDIR /home/repro
 RUN tar xf /tmp/tpch.tar
+RUN tar xf /tmp/tpch-dbgen.tar
 COPY scripts/dispatch.sh .
 COPY scripts/doall.sh .
 COPY scripts/prepare_data.sh .
