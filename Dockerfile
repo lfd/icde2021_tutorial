@@ -139,7 +139,8 @@ COPY scripts/dispatch.sh .
 COPY scripts/doall.sh .
 COPY scripts/prepare_data.sh .
 
-RUN tar --transform 's,^,measure/,' -cjhf deliverable.tar.bz2 queries.*/ TPCH-sqlite/ bin/ dispatch.sh prepare_data.sh
+RUN tar --transform 's,^,measure/,' -cjhf deliverable.tar.bz2 queries.*/ TPCH-sqlite/ bin/ \
+    doall.sh dispatch.sh prepare_data.sh
 
 WORKDIR /home/repro
 
