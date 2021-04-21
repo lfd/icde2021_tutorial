@@ -59,11 +59,11 @@ USER repro
 WORKDIR /home/repro
 
 # Prepare directory structure
-# TODO: Change and implement
-## src/             - to store source code implemented by the researchers
-## git-repos        - for external git repositories
+## git-repos/       - for external git repositories
 ## build/           - temporary directory for out-of-tree builds
-RUN mkdir -p $HOME/git-repos $HOME/src $HOME/build $HOME/bin
+## bin/             - for generated binary executables
+RUN mkdir -p $HOME/git-repos $HOME/build $HOME/bin
+
 
 # Obtain sqlite sources from a git repo, and check out _one specific, defined state_
 # instead of working with a (changing) HEAD
@@ -76,7 +76,8 @@ RUN git clone https://github.com/lfd/sqlite.git
 WORKDIR /home/repro/git-repos/sqlite
 # TODO: Can we define the specific commit as a constant on top of the Dockerfile?
 # TODO: Temp
-#RUN git checkout -b repro a626a139405d9
+#ENV SQLITE_HEAD="a626a139405d9"
+#RUN git checkout -b repro $SQLITE_HEAD
 
 # Purely technical: Construct manifest file required for building sqlite
 # This is an artefact of the way how sqlite is built
