@@ -14,8 +14,16 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV LANG="C.UTF-8"
 ENV LC_ALL="C.UTF-8"
 
+RUN apt update -qq
+RUN apt-get install -y gpg-agent
+RUN apt install -y --no-install-recommends software-properties-common dirmngr
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+RUN add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran40/"
+RUN add-apt-repository ppa:c2d4u.team/c2d4u4.0+
+
 # NOTE: Recommended practice: Sort list alphabetically
 RUN apt update && apt install -y --no-install-recommends \
+	biber \
 	build-essential \
 	ca-certificates \
 	curl \
@@ -23,11 +31,28 @@ RUN apt update && apt install -y --no-install-recommends \
 	gawk \
 	git \
 	joe \
+	libpng-dev \
 	nano \
 	openssh-client \
+	r-base \
+	r-cran-ggplot2 \
+	r-cran-dplyr \
+	r-cran-knitr \
+	r-cran-stringr \
+	r-cran-tinytex \
+	r-cran-xtable \
 	sudo \
 	tcl-dev \
-	time 
+	time \
+	texlive-base \
+	texlive-bibtex-extra \
+	texlive-fonts-recommended \
+	texlive-generic-extra \
+	texlive-latex-extra \
+	texlive-publishers
+
+## We need to manually build the R tikzDevice package
+RUN Rscript -e 'install.packages("tikzDevice", repos="https://cloud.r-project.org")'
 
 RUN useradd -m -G sudo -s /bin/bash repro && echo "repro:repro" | chpasswd
 USER repro
@@ -113,4 +138,4 @@ WORKDIR /home/repro
 
 ## Clone the associated paper source so contributors can work on it from within the
 ## container (and also ensure buildability in years to come)
-RUN git clone https://github.com/lfd/icde2021_demo_paper.git
+RUN git clone https://github.com/lfd/icde2021_demo_paper.git paper
