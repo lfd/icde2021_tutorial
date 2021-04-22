@@ -149,3 +149,7 @@ WORKDIR /home/repro
 ## Clone the associated paper source so contributors can work on it from within the
 ## container (and also ensure buildability in years to come)
 RUN git clone https://github.com/lfd/icde2021_demo_paper.git paper
+
+## We want to be able to use git within the container, so set default values
+RUN git config --global user.name "Wolfgang Mauerer"
+RUN git config --global user.email "wolfgang.mauerer@othr.de"
