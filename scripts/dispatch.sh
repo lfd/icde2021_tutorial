@@ -24,7 +24,7 @@ iterations=$3       ## number of iterations per query
 label=$4            ## provide some identification label, e.g., "x86"
 
 # Ensure data have been generated with this scale factor.
-if [ ! -f "=db/sf${scalefactor}/TPC-H.db" ]; then
+if [ ! -f "db/sf${scalefactor}/TPC-H.db" ]; then
     echo "Database db/sf${scalefactor}/TPC-H.db does not exist. Did you run prepare_data.sh?"
     exit
 fi
