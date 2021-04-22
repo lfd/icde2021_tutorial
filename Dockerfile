@@ -129,7 +129,6 @@ COPY queries.impolite/* /home/repro/queries.impolite/
 # Generate self-contained measurement package that can
 # be deployed on the target platform.
 WORKDIR /home/repro/git-repos/TPCH-sqlite
-RUN patch -p0 create_db.sh /tmp/TPCH-sqlite.diff 
 RUN git archive --format=tar --prefix=TPCH-sqlite/ HEAD > /tmp/tpch.tar
 WORKDIR /home/repro/git-repos/TPCH-sqlite/tpch-dbgen
 RUN git archive --format=tar --prefix=TPCH-sqlite/tpch-dbgen/ HEAD > /tmp/tpch-dbgen.tar
@@ -137,6 +136,12 @@ RUN git archive --format=tar --prefix=TPCH-sqlite/tpch-dbgen/ HEAD > /tmp/tpch-d
 WORKDIR /home/repro
 RUN tar xf /tmp/tpch.tar
 RUN tar xf /tmp/tpch-dbgen.tar
+
+# Apply local fixes to components
+WORKDIR /home/repro/TPCH-sqlite
+RUN patch -p0 create_db.sh /tmp/TPCH-sqlite.diff 
+
+WORKDIR /home/repro
 COPY scripts/dispatch.sh .
 COPY scripts/doall.sh .
 COPY scripts/prepare_data.sh .
