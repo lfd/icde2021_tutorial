@@ -1,10 +1,11 @@
 # Replication package example for ICDE 2021 tutorial
 # "Nullius in Verba: Reproducibility for Database Systems Research, Revisited"
-# TODO: License
-# TODO: Use COPY instead of ADD (unless used with URLs)
+
+# Copyright 2021, Wolfgang Mauerer <wolfgang.mauerer@othr.de>
+# Copyright 2021, Stefanie Scherzinger <stefanie.scherzinger@uni-passau.de>
+# SPDX-License-Identifier: GPL-2.0-only
 
 # Start off of a long-term maintained base distribution
-# TODO: Discuss advantages and disadvantages of using older/newer base versions
 FROM ubuntu:18.04
 
 MAINTAINER Wolfgang Mauerer <wolfgang.mauerer@othr.de>

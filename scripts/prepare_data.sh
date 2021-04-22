@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# Copyright 2021, Stefanie Scherzinger <stefanie.scherzinger@uni-passau.de>
+# Copying and distribution of this file, with or without modification,
+# are permitted in any medium without royalty provided the copyright
+# notice and this notice are preserved.  This file is offered as-is,
+# without any warranty.
+# SPDX-License-Identifier: FSFAP
+
 # Create a directory for SQLITE database instances.
 mkdir -p db
 rm -rf db/sf*
