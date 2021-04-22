@@ -52,7 +52,8 @@ RUN apt update && apt install -y --no-install-recommends \
 	texlive-latex-extra \
 	texlive-publishers
 
-## We need to manually build the R tikzDevice package
+# We need to manually build the R tikzDevice package because there is no
+# appropriate distributed version in our repository
 RUN Rscript -e 'install.packages("tikzDevice", repos="https://cloud.r-project.org")'
 
 RUN useradd -m -G sudo -s /bin/bash repro && echo "repro:repro" | chpasswd
@@ -71,14 +72,17 @@ RUN mkdir -p $HOME/git-repos $HOME/build $HOME/bin
 # NOTE: We use an unofficial git mirror of sqlite to avoid working with fossil, which
 # as a fairly unusual choice of tool, for the sake of simplicity in this tutorial.
 WORKDIR /home/repro/git-repos
-# TODO: Temp
 RUN git clone https://github.com/lfd/sqlite.git
-#RUN git clone git://repo.or.cz/sqlite.git
 WORKDIR /home/repro/git-repos/sqlite
-# TODO: Can we define the specific commit as a constant on top of the Dockerfile?
-# TODO: Temp
+
+# Alternative: Clone a specific revision from the upstream repository,
+# then deliberately distribute the changes as individual patches outside git.
+# This way, reviewers can inspect them without tool interaction.
+
 #ENV SQLITE_HEAD="a626a139405d9"
+#RUN git clone git://repo.or.cz/sqlite.git
 #RUN git checkout -b repro $SQLITE_HEAD
+#RUN patch ...
 
 # Purely technical: Construct manifest file required for building sqlite
 # This is an artefact of the way how sqlite is built
@@ -87,11 +91,6 @@ RUN echo $(git log -1 --format=format:%H) > manifest.uuid
 RUN echo C $(cat manifest.uuid) > manifest
 RUN git log -1 --format=format:%ci%n | sed 's/ [-+].*$//;s/ /T/;s/^/D /' >> manifest
 
-# TODO: Integrate research changes (later step)
-# NOTE: We deliberately distribute the changes as individual patches outside git
-# so reviewers can inspect them without tool interaction. Alternatively, we could
-# perform the above clone from a custom git repo that has a branch with all the
-# required changes
 RUN mkdir -p /home/repro/build/sqlite
 WORKDIR /home/repro/build/sqlite
 
@@ -106,6 +105,8 @@ RUN gcc shell.c sqlite3.c -lpthread -ldl -lm -o ~/bin/sqpolite
 # Build the latency measurement tool
 RUN gcc $HOME/git-repos/sqlite/src/latency.c -I. -I$HOME/git-repos/sqlite/src sqlite3.o \
                                              -o ~/bin/latency -lm -ldl -lpthread
+
+# Build the plugin the the "pretty please" (pplease) function
 RUN gcc -I. -fPIC -shared $HOME/git-repos/sqlite/ext/pplease.c -o pplease.so
 
 # Make custom-built binaries in ~/bin binaries available via PATH
@@ -118,8 +119,7 @@ RUN git clone --recursive https://github.com/lovasoa/TPCH-sqlite
 WORKDIR /home/repro/git-repos/TPCH-sqlite
 RUN git checkout -b repro 23e420d8d49a6
 
-COPY patches/TPCH-sqlite.diff .
-RUN git apply --ignore-space-change TPCH-sqlite.diff
+COPY patches/TPCH-sqlite.diff /tmp
 
 RUN mkdir -p /home/repro/queries.polite
 RUN mkdir -p /home/repro/queries.impolite
@@ -129,6 +129,7 @@ COPY queries.impolite/* /home/repro/queries.impolite/
 # Generate self-contained measurement package that can
 # be deployed on the target platform.
 WORKDIR /home/repro/git-repos/TPCH-sqlite
+RUN patch -p0 create_db.sh /tmp/TPCH-sqlite.diff 
 RUN git archive --format=tar --prefix=TPCH-sqlite/ HEAD > /tmp/tpch.tar
 WORKDIR /home/repro/git-repos/TPCH-sqlite/tpch-dbgen
 RUN git archive --format=tar --prefix=TPCH-sqlite/tpch-dbgen/ HEAD > /tmp/tpch-dbgen.tar
